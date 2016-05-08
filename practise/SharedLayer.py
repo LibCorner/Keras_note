@@ -1,5 +1,5 @@
 #practise
-from keras.layers import Dense,Input,merge
+from keras.layers import Dense,Input,merge,Lambda
 from keras.models import Model
 import numpy as np
 
@@ -16,9 +16,10 @@ input_a=Input(shape=(6,))
 input_b=Input(shape=(6,))
 out_a=model(input_a)
 out_b=model(input_b)
+out_b=Lambda(lambda x:x*(-1))(out_b)
 
 #合并
-merged=merge([out_a,out_b],mode='concat')
+merged=merge([out_a,out_b],mode="sum")
 out=Dense(1,activation='sigmoid')(merged)
 
 #创建Model
