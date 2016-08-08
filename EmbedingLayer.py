@@ -1,4 +1,6 @@
-#Embedding Layer
+# -*- coding: utf-8 -*-
+#Eembeding
+
 from keras.models import Sequential
 from keras.layers import Embedding
 import numpy as np
@@ -24,11 +26,19 @@ model.add(Embedding(1000,64,input_length=10))
 #输入的最大整数小于1000(vocabulary size)
 #现在model.output_shape==(None,10,64), None是batch维
 
+model_2=Sequential()
+weights=np.random.rand(1000,64)  
+#Embedding的权重，输出的就是weights里对应下标的向量，否则随机生成
+model_2.add(Embedding(1000,64,input_length=10,weights=[weights]))
+
 #32是batch数，即输入的样本数，
 #10是每个样本的序列长度
 input_array=np.random.randint(1000,size=(32,10))
 
 
 model.compile('rmsprop','mse')
+model_2.compile(optimizer='sgd',loss='mse')
 output_array=model.predict(input_array)
+output_array_2=model_2.predict(input_array)
 assert output_array.shape==(32,10,64)
+
