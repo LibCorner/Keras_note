@@ -14,7 +14,6 @@ word_len=10
 vocab_size=chars_size
 
 def get_model(channel=10):
-    '''生成网络，输入句子矩阵，生成单词'''
     input=Input(shape=(channel,word_len,vocab_size))
     conv1=Convolution2D(nb_filter=64,nb_row=3,nb_col=5,border_mode='same',activation='relu')(input)
     pool1=MaxPooling2D(pool_size=(1,2))(conv1)
