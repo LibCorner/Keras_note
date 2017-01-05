@@ -19,13 +19,16 @@ model.compile(optimizer="sgd",loss="mse")
 
 #dot/cos
 model_dot=Sequential()
-#model_dot.add(Merge(layers=[model1,model2],mode="dot",dot_axes=1))
-model_dot.add(Merge(layers=[model1,model2],mode="cos",dot_axes=1))
+model_dot.add(Merge(layers=[model1,model2],mode="dot",dot_axes=[1,1]))
+#model_dot.add(Merge(layers=[model1,model2],mode="cos",dot_axes=1))
 model_dot.compile(optimizer="sgd",loss="mse")
 
 #Test
 data1=np.random.rand(2,10)
-data2=np.random.rand(2,10)
+data2=np.random.rand(6,10)
 pre1=model1.predict(data1)
 pre2=model2.predict(data2)
-pre=model_dot.predict([data1,data2])
+pre=model_dot.predict([data1,data2[0:3]])
+pre1=model_dot.predict([data1,data2])
+print pre
+print pre1
